@@ -3,62 +3,57 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Domain;
+using Microsoft.AspNetCore.Identity;
 
 namespace Persistence
 {
     public class Seed
     {
-        public static async Task SeedData(DataContext context)
+        public static async Task SeedDataAsync(DataContext context,
+            UserManager<AppUser> userManager)
         {
-            
+            if (!userManager.Users.Any())
+            {
+                var users = new List<AppUser>
+                {
+                    new AppUser
+                    {
+                        Id = "a",
+                        DisplayName = "Bob",
+                        UserName = "bob",
+                        Email = "bob@test.com"
+                    },
+                    new AppUser
+                    {
+                        Id = "b",
+                        DisplayName = "Jane",
+                        UserName = "jane",
+                        Email = "jane@test.com"
+                    },
+                    new AppUser
+                    {
+                        Id = "c",
+                        DisplayName = "Tom",
+                        UserName = "tom",
+                        Email = "tom@test.com"
+                    },
+                };
+
+                foreach (var user in users)
+                {
+                    await userManager.CreateAsync(user, "Pa$$w0rd");
+                }
+            }
+
             if (!context.Activities.Any())
             {
                 var activities = new List<Activity>
                 {
                     new Activity
                     {
-                        Titel = "Past Activity 1",
+                        Title = "Past Activity 1",
                         Date = DateTime.Now.AddMonths(-2),
-                        Discription = "Activity 2 months ago",
-                        Category = "Drinks",
-                        City = "London",
-                        Venue = "Pub",
-                    },
-                    new Activity
-                    {
-                        Titel = "Past Activity 2",
-                        Date = DateTime.Now.AddMonths(-1),
-                        Discription = "Activity 1 month ago",
-                        Category = "Culture",
-                        City = "Paris",
-                        Venue = "The Louvre",
-                        
-                    },
-                    new Activity
-                    {
-                        Titel = "Future Activity 1",
-                        Date = DateTime.Now.AddMonths(1),
-                        Discription = "Activity 1 month in future",
-                        Category = "Music",
-                        City = "London",
-                        Venue = "Wembly Stadium",
-                    },
-                        
-                    new Activity
-                    {
-                        Titel = "Future Activity 2",
-                        Date = DateTime.Now.AddMonths(2),
-                        Discription = "Activity 2 months in future",
-                        Category = "Food",
-                        City = "London",
-                        Venue = "Jamies Italian",
-                        
-                    },
-                    new Activity
-                    {
-                        Titel = "Future Activity 3",
-                        Date = DateTime.Now.AddMonths(3),
-                        Discription = "Activity 3 months in future",
+                        Description = "Activity 2 months ago",
                         Category = "Drinks",
                         City = "London",
                         Venue = "Pub",
@@ -66,52 +61,92 @@ namespace Persistence
                     },
                     new Activity
                     {
-                        Titel = "Future Activity 4",
-                        Date = DateTime.Now.AddMonths(4),
-                        Discription = "Activity 4 months in future",
+                        Title = "Past Activity 2",
+                        Date = DateTime.Now.AddMonths(-1),
+                        Description = "Activity 1 month ago",
                         Category = "Culture",
-                        City = "London",
-                        Venue = "British Museum",
-                        
+                        City = "Paris",
+                        Venue = "The Louvre",
+                       
                     },
                     new Activity
                     {
-                        Titel = "Future Activity 5",
-                        Date = DateTime.Now.AddMonths(5),
-                        Discription = "Activity 5 months in future",
-                        Category = "Drinks",
-                        City = "London",
-                        Venue = "Punch and Judy",
-                        
-                    },
-                    new Activity
-                    {
-                        Titel = "Future Activity 6",
-                        Date = DateTime.Now.AddMonths(6),
-                        Discription = "Activity 6 months in future",
+                        Title = "Future Activity 1",
+                        Date = DateTime.Now.AddMonths(1),
+                        Description = "Activity 1 month in future",
                         Category = "Music",
                         City = "London",
-                        Venue = "O2 Arena",
-                        
+                        Venue = "Wembly Stadium",
+                       
                     },
                     new Activity
                     {
-                        Titel = "Future Activity 7",
-                        Date = DateTime.Now.AddMonths(7),
-                        Discription = "Activity 7 months in future",
-                        Category = "Travel",
-                        City = "Berlin",
-                        Venue = "All",
+                        Title = "Future Activity 2",
+                        Date = DateTime.Now.AddMonths(2),
+                        Description = "Activity 2 months in future",
+                        Category = "Food",
+                        City = "London",
+                        Venue = "Jamies Italian",
+                       
                     },
                     new Activity
                     {
-                        Titel = "Future Activity 8",
-                        Date = DateTime.Now.AddMonths(8),
-                        Discription = "Activity 8 months in future",
+                        Title = "Future Activity 3",
+                        Date = DateTime.Now.AddMonths(3),
+                        Description = "Activity 3 months in future",
                         Category = "Drinks",
                         City = "London",
                         Venue = "Pub",
-                        
+                       
+                    },
+                    new Activity
+                    {
+                        Title = "Future Activity 4",
+                        Date = DateTime.Now.AddMonths(4),
+                        Description = "Activity 4 months in future",
+                        Category = "Culture",
+                        City = "London",
+                        Venue = "British Museum",
+                       
+                    },
+                    new Activity
+                    {
+                        Title = "Future Activity 5",
+                        Date = DateTime.Now.AddMonths(5),
+                        Description = "Activity 5 months in future",
+                        Category = "Drinks",
+                        City = "London",
+                        Venue = "Punch and Judy",
+                       
+                    },
+                    new Activity
+                    {
+                        Title = "Future Activity 6",
+                        Date = DateTime.Now.AddMonths(6),
+                        Description = "Activity 6 months in future",
+                        Category = "Music",
+                        City = "London",
+                        Venue = "O2 Arena",
+                      
+                    },
+                    new Activity
+                    {
+                        Title = "Future Activity 7",
+                        Date = DateTime.Now.AddMonths(7),
+                        Description = "Activity 7 months in future",
+                        Category = "Travel",
+                        City = "Berlin",
+                        Venue = "All",
+                       
+                    },
+                    new Activity
+                    {
+                        Title = "Future Activity 8",
+                        Date = DateTime.Now.AddMonths(8),
+                        Description = "Activity 8 months in future",
+                        Category = "Drinks",
+                        City = "London",
+                        Venue = "Pub",
                     }
                 };
 
